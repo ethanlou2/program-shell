@@ -1,0 +1,16 @@
+[submodule "mysite"]
+	path = mysite
+	url = ../mysite
+	branch = main
+[submodule "mysite1"]
+	path = mysite1
+	url = ../mysite1
+	branch = main
+[submodule "dispatcher"]
+	path = dispatcher
+	url = ../dispatcher-config
+	branch = main
+[submodule "cdn"]
+	path = cdn
+	url = ../cdn-config
+	branch = main
