@@ -2,15 +2,19 @@
 	path = mysite
 	url = ../mysite
 	branch = main
+	shallow = true
 [submodule "mysite1"]
 	path = mysite1
 	url = ../mysite1
 	branch = main
+	shallow = true
 [submodule "dispatcher"]
 	path = dispatcher
 	url = ../dispatcher-config
 	branch = main
+	shallow = true
 [submodule "cdn"]
 	path = cdn
 	url = ../cdn-config
 	branch = main
+	shallow = true
