@@ -1,0 +1,20 @@
+name: sync-submodules
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+          token: ${{ secrets.SHELL_REPO_PUSH_TOKEN }}
+      - run: |
+          git submodule update --remote --merge
+          git config user.name "shell-sync-bot"
+          git config user.email "bot@yourorg.com"
+          git add mysite mysite1 dispatcher cdn
+          git diff --cached --quiet || git commit -m "chore: sync submodules to latest main"
+          git push

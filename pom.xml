@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.yourorg.program</groupId>
+  <artifactId>program-shell</artifactId>
+  <packaging>pom</packaging>
+  <version>1.0.0-SNAPSHOT</version>
+  <name>Program Shell</name>
+  <description>
+    Single repository registered with Adobe Cloud Manager for this program.
+    Aggregates independently-owned team repositories (mysite, mysite1) and the
+    platform-owned dispatcher configuration as git submodules so they can be
+    built and deployed through one Cloud Manager pipeline. CDN configuration
+    (cdn/) is deployed separately by Cloud Manager's Config Pipeline and is not
+    part of this Maven reactor.
+  </description>
+
+  <modules>
+    <module>mysite</module>
+    <module>mysite1</module>
+    <module>dispatcher</module>
+  </modules>
+</project>
