@@ -3,14 +3,22 @@ on:
   schedule:
     - cron: "*/30 * * * *"
   workflow_dispatch:
+
+permissions:
+  contents: write
+
 jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
+      # All four submodule repos (mysite, mysite1, dispatcher, cdn) are public,
+      # so the default short-lived GITHUB_TOKEN is enough: no PAT/secret needed,
+      # nothing to rotate. If any of those repos ever go private, switch back to
+      # a PAT (or a GitHub App token) stored in secrets.SHELL_REPO_PUSH_TOKEN and
+      # pass it via `token:` below.
       - uses: actions/checkout@v4
         with:
           submodules: true
-          token: ${{ secrets.SHELL_REPO_PUSH_TOKEN }}
       - run: |
           git submodule update --remote --merge
           git config user.name "shell-sync-bot"
