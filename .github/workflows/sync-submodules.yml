@@ -36,7 +36,13 @@ jobs:
           token: ${{ steps.app-token.outputs.token }}
 
       - run: |
-          git submodule update --remote --merge
+          # Plain checkout to each submodule's remote tip (no --merge/--rebase):
+          # program-shell never carries local edits inside the submodule working
+          # trees, so there's nothing to merge. Using --merge here breaks because
+          # .gitmodules marks all four submodules shallow=true (for faster Cloud
+          # Manager builds) and shallow history can make git report "refusing to
+          # merge unrelated histories" even for a simple fast-forward.
+          git submodule update --remote
           git config user.name "shell-sync-bot"
           git config user.email "bot@yourorg.com"
           git add mysite mysite1 dispatcher cdn
