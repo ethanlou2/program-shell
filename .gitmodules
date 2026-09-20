@@ -2,19 +2,15 @@
 	path = mysite
 	url = https://github.com/ethanlou2/mysite.git
 	branch = dev
-	shallow = true
 [submodule "mysite1"]
 	path = mysite1
 	url = https://github.com/ethanlou2/mysite1.git
 	branch = dev
-	shallow = true
 [submodule "dispatcher"]
 	path = dispatcher
 	url = https://github.com/ethanlou2/dispatcher.git
 	branch = dev
-	shallow = true
 [submodule "cdn"]
 	path = cdn
 	url = https://github.com/ethanlou2/cdn.git
 	branch = dev
-	shallow = true
