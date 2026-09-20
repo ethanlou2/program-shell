@@ -10,6 +10,15 @@ permissions:
 jobs:
   sync:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      # `schedule` only ever fires this workflow file as it exists on the
+      # default branch — it does NOT run separately per branch. To keep
+      # dev/stage/prod (and main) all auto-synced in real time from a single
+      # scheduled run, we fan out across branches here instead of duplicating
+      # this file on every branch. Add/remove branch names as they're created.
+      matrix:
+        branch: [main, dev, stage, prod]
     steps:
       # Cross-repo access (mysite, mysite1, dispatcher, cdn may be private) via a
       # GitHub App installation token, generated fresh on every run (~1h TTL).
@@ -32,6 +41,7 @@ jobs:
 
       - uses: actions/checkout@v4
         with:
+          ref: ${{ matrix.branch }}
           submodules: true
           token: ${{ steps.app-token.outputs.token }}
 
@@ -47,4 +57,4 @@ jobs:
           git config user.email "bot@yourorg.com"
           git add mysite mysite1 dispatcher cdn
           git diff --cached --quiet || git commit -m "chore: sync submodules to latest main"
-          git push
+          git push origin ${{ matrix.branch }}
