@@ -43,15 +43,20 @@ jobs:
         with:
           ref: ${{ matrix.branch }}
           submodules: true
+          # actions/checkout's fetch-depth (default 1) applies to submodule
+          # fetches too, regardless of .gitmodules' own shallow setting. A
+          # depth-1 submodule clone never gets a refs/remotes/origin/<branch>
+          # tracking ref for non-default branches, so `git submodule update
+          # --remote` on dev/stage/prod later fails with "Unable to find
+          # refs/remotes/origin/<branch> revision in submodule path". Fetch
+          # full history for both the superproject and all submodules.
+          fetch-depth: 0
           token: ${{ steps.app-token.outputs.token }}
 
       - run: |
           # Plain checkout to each submodule's remote tip (no --merge/--rebase):
           # program-shell never carries local edits inside the submodule working
-          # trees, so there's nothing to merge. Using --merge here breaks because
-          # .gitmodules marks all four submodules shallow=true (for faster Cloud
-          # Manager builds) and shallow history can make git report "refusing to
-          # merge unrelated histories" even for a simple fast-forward.
+          # trees, so there's nothing to merge.
           git submodule update --remote
           git config user.name "shell-sync-bot"
           git config user.email "bot@yourorg.com"
