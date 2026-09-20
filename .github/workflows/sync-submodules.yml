@@ -61,5 +61,5 @@ jobs:
           git config user.name "shell-sync-bot"
           git config user.email "bot@yourorg.com"
           git add mysite mysite1 dispatcher cdn
-          git diff --cached --quiet || git commit -m "chore: sync submodules to latest main"
+          git diff --cached --quiet || git commit -m "chore: sync submodules to latest ${{ matrix.branch }}"
           git push origin ${{ matrix.branch }}
